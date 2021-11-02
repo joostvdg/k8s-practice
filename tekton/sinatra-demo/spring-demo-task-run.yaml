@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: build-spring-api-with-buildpacks
+spec:
+  serviceAccountName: dockerhub-service
+  taskRef:
+    name: buildpacks
+  inputs:
+    resources:
+    - name: source
+      resourceRef:
+        name: spring-api-git
+    params:
+    - name: BUILDER_IMAGE
+      value: cloudfoundry/cnb:bionic
+    - name: APP_IMAGE
+      value: spring-api-tekton-demo
+  outputs:
+    resources:
+    - name: image
+      resourceRef:
+        name: spring-api-tekton-demo

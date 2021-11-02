@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dockerhub-service
+secrets:
+  - name: dockercreds # Create secret for your container registry
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: spring-api-git
+spec:
+  type: git
+  params:
+    - name: revision
+      value: main
+    - name: url
+      value: https://github.com/BrianMMcClain/spring-boot-api-demo
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: spring-api-tekton-demo
+spec:
+  type: image
+  params:
+    - name: url
+      value: caladreas/spring-api-tekton-demo

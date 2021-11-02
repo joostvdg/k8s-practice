@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: sinatra-hello-world-tekton-demo-image
+spec:
+  type: image
+  params:
+    - name: url
+      value: caladreas/sinatra-hello-world-tekton-demo
