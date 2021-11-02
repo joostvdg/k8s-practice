@@ -1,0 +1,17 @@
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: grafana
+spec:
+  providerConfigRef:
+    name: helm-provider
+  forProvider:
+    chart:
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 6.17.4
+    namespace: logging
+    wait: true
+
+
+

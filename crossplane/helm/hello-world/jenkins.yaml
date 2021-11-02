@@ -1,0 +1,28 @@
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: jenkins-example
+spec:
+  providerConfigRef:
+    name: helm-provider
+  forProvider:
+    chart:
+      name: jenkins
+      repository: https://charts.jenkins.io
+      version: 3.8.6
+    namespace: jenkins
+    wait: true
+    values:
+      controller:
+        service:
+          type: ClusterIP
+        podAnnotations:
+          prometheus.io/path: /prometheus
+          prometheus.io/port: "8080"
+          prometheus.io/scrape: "true"
+      agent:
+        enabled: true
+      rbac:
+        create: true
+
+

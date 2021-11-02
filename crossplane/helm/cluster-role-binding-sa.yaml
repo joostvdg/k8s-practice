@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crossplane-helm-sa-creator
+subjects:
+- kind: ServiceAccount
+  name: crossplane-provider-helm-17449053f350
+  namespace: crossplane-system
+roleRef:
+  kind: ClusterRole
+  name: sa-creator
+  apiGroup: rbac.authorization.k8s.io
