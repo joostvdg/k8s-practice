@@ -1,0 +1,17 @@
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: prometheus
+spec:
+  providerConfigRef:
+    name: helm-provider
+  forProvider:
+    chart:
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 14.11.0
+    namespace: ci
+    wait: true
+    values:
+      kubeStateMetrics:
+        enabled: false

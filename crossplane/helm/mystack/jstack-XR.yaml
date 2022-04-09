@@ -1,0 +1,7 @@
+apiVersion: devops.kearos.net/v1alpha1
+kind: XJStack
+metadata:
+  name: my-jstack
+spec:
+  parameters:
+    storageSize: "2Gi"

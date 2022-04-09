@@ -4,7 +4,7 @@ metadata:
   name: crossplane-helm-admin-creator
 subjects:
 - kind: ServiceAccount
-  name: crossplane-provider-helm-17449053f350
+  name: provider-helm-17449053f350 
   namespace: crossplane-system
 roleRef:
   kind: ClusterRole

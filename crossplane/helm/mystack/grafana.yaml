@@ -10,7 +10,7 @@ spec:
       name: grafana
       repository: https://grafana.github.io/helm-charts
       version: 6.17.4
-    namespace: ci
+    namespace: logging
     wait: true
 
 

@@ -1,0 +1,9 @@
+apiVersion: devops.kearos.net/v1alpha1
+kind: XJStack
+metadata:
+  namespace: jenkins
+  name: my-jstack-none
+spec:
+  parameters:
+    storageSize: "1Gi"
+

@@ -7,11 +7,10 @@ spec:
     name: helm-provider
   forProvider:
     chart:
-      name: grafana
+      name: loki
       repository: https://grafana.github.io/helm-charts
-      version: 6.17.4
+      version: 2.7.0
     namespace: ci
     wait: true
-
 
 

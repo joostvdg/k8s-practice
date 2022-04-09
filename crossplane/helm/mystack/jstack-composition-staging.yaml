@@ -1,0 +1,41 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: jstack-staging
+  labels:
+    provider: helm
+spec:
+  compositeTypeRef:
+    apiVersion: devops.kearos.net/v1alpha1
+    kind: XJStack
+  resources:
+  - name: jenkinsInstance
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: Release
+      spec:
+        providerConfigRef:
+          name: helm-provider
+        forProvider:
+          chart:
+            name: jenkins
+            repository: https://charts.jenkins.io
+            version: 3.8.6
+          namespace: ci
+          wait: true
+          values:
+            controller:
+              service:
+                type: ClusterIP
+              podAnnotations:
+                prometheus.io/path: /prometheus
+                prometheus.io/port: "8080"
+                prometheus.io/scrape: "true"
+            agent:
+              enabled: true
+            rbac:
+              create: true
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.storageSize
+      toFieldPath: spec.forProvider.persistence.size
