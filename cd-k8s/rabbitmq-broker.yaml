@@ -1,0 +1,72 @@
+# https://www.rabbitmq.com/kubernetes/operator/using-operator.html
+---
+# RabbitMQ cluster used by the Broker
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+  namespace: fmtok8s
+spec:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 650m
+      memory: 2Gi
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/arch 
+            operator: In
+            values:
+            - amd64
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: event-display
+  namespace: fmtok8s
+spec:
+  template:
+    spec:
+      containers:
+      - image: gcr.io/knative-releases/knative.dev/eventing/cmd/event_display
+---
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  name: default
+  namespace: fmtok8s
+  annotations:
+    eventing.knative.dev/broker.class: RabbitMQBroker
+spec:
+  config:
+    apiVersion: eventing.knative.dev/v1alpha1
+    kind: RabbitmqBrokerConfig
+    name: default-config
+  delivery:
+    deadLetterSink:
+      ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: event-display
+        namespace: fmtok8s
+    retry: 5
+---
+apiVersion: eventing.knative.dev/v1alpha1
+kind: RabbitmqBrokerConfig
+metadata:
+  name: default-config
+  namespace: fmtok8s
+spec:
+  rabbitmqClusterReference:
+    name: rabbitmq
+    namespace: fmtok8s
+      #  queueType: quorum
+      #  does not seem supported in the latest version?
+      #  ah, docs says RabbitMQ 3.8.0+ is required
+---

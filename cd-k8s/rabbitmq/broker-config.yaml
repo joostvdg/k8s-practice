@@ -1,0 +1,12 @@
+apiVersion: eventing.knative.dev/v1alpha1
+kind: RabbitmqBrokerConfig
+metadata:
+  name: default-config
+  namespace: broker-trigger-demo
+spec:
+  rabbitmqClusterReference:
+    name: rabbitmq
+    namespace: broker-trigger-demo
+      #  queueType: quorum
+      #  does not seem supported in the latest version?
+      #  ah, docs says RabbitMQ 3.8.0+ is required

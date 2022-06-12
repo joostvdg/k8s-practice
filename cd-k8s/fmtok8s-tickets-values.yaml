@@ -1,0 +1,6 @@
+fmtok8s-tickets-service:
+  knativeDeploy: true
+fmtok8s-payments-service:
+  knativeDeploy: true
+fmtok8s-queue-service:
+  knativeDeploy: true

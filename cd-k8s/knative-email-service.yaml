@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cmg
+spec:
+  template:
+    spec:
+      containers:
+        - image: ghcr.io/joostvdg/go-demo:0.3.0
+          ports:
+          - containerPort: 8080
+  # traffic:
+  # - percent: 80
+  #   revisionName: cmg-00001
+  # - percent: 20
+  #   revisionName: cmg-00003

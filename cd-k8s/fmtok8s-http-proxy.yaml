@@ -1,0 +1,22 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  annotations:
+    projectcontour.io/ingress.class: contour-external
+  labels:
+    app.kubernetes.io/component: fmtok8s
+  name: fmtok8s
+  namespace: fmtok8s
+spec:
+  ingressClassName: contour
+  routes:
+  - conditions:
+    - prefix: /
+    # pathRewritePolicy:
+    #   replacePrefix:
+    #   - replacement: /
+    services:
+    - name: fmtok8s-api-gateway
+      port: 80
+  virtualhost:
+    fqdn: fmtok8s.192.168.178.95.sslip.io

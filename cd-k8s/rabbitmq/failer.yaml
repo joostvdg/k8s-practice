@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: failer
+  labels:
+    rabbitmq.eventing.knative.dev/release: "v20220612-1034653b"
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/knative-nightly/knative.dev/eventing-rabbitmq/cmd/failer@sha256:8611bd03213c360a5382b905a89a9cf59a143922047781ad06e6c8e532ca125a
+          env:
+            - name: DEFAULT_RESPONSE_CODE
+              value: "200"

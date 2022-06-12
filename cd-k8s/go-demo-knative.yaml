@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: go-demo
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/target: "100" # 100 concurrent requests
+    spec:
+      containers:
+        - image: ghcr.io/joostvdg/go-demo:0.7.0
+          ports:
+          - containerPort: 8080
+  traffic:
+  - percent: 100
+    revisionName: go-demo-00002
+  - revisionName: go-demo-00003
+    tag: color
+  - latestRevision: true
+    tag: debug

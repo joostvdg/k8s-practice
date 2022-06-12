@@ -1,0 +1,11 @@
+primary:
+  nodeSelector: 
+    kubernetes.io/arch: amd64
+readReplicas:
+  nodeSelector:
+    kubernetes.io/arch: amd64
+
+global:
+  storageClass: longhorn
+
+architecture: standalone

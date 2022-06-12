@@ -1,0 +1,9 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: rmq-wildcard-trigger
+  namespace: fmtok8s
+spec:
+  broker: rabbitmq-broker
+  subscriber:
+    uri: http://sockeye.fmtok8s.svc.cluster.local
